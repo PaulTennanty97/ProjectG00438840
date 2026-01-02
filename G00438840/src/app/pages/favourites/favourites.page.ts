@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { HeaderComponent } from 'src/app/components/header/header.component';
+import { IonContent} from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-favourites',
-  templateUrl: './favourites.page.html',
+  templateUrl:'./favourites.page.html',
   styleUrls: ['./favourites.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [IonContent, CommonModule, FormsModule, HeaderComponent],
 })
-export class FavouritesPage implements OnInit {
+export class favouritesPage implements OnInit {
 
   constructor() { }
-
   ngOnInit() {
   }
 
