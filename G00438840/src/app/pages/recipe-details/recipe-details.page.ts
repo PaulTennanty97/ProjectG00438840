@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonList, IonLabel, IonItem, IonCard, IonButton, IonIcon } from '@ionic/angular/standalone';
+import { IonContent, IonList, IonLabel, IonItem, IonCard, IonButton, IonIcon, IonThumbnail } from '@ionic/angular/standalone';
 import { HeaderComponent } from 'src/app/components/header/header.component';
 
 import { ActivatedRoute } from '@angular/router';
@@ -12,12 +12,13 @@ import { Http } from 'src/app/services/http';
   templateUrl: './recipe-details.page.html',
   styleUrls: ['./recipe-details.page.scss'],
   standalone: true,
-  imports: [IonContent, CommonModule, FormsModule, HeaderComponent, IonList, IonLabel, IonItem, IonCard, IonButton, IonIcon]
+  imports: [IonContent, CommonModule, FormsModule, HeaderComponent, IonList, IonLabel, IonItem, IonCard, IonButton, IonIcon, IonThumbnail]
 })
 export class RecipeDetailsPage implements OnInit {
 
   recipe: any;
   private apiKey = "70759a4f7911402abcc53d3c51d3b759";
+extendedIngredients: any;
 
   constructor(private route: ActivatedRoute, private mhs: Http) { }
 

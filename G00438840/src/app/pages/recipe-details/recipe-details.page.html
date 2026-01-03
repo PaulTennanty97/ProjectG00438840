@@ -7,19 +7,36 @@
   <ion-card>
     <img [src]="recipe.image" />
   </ion-card>
-  <br>
   <h1>{{recipe.title}}</h1>
-  <br>
   <h3>Ingredients</h3>
   <ion-list>
-    @for (ing of recipe.extendedIngredients; track ing.id){
+    @for (ing of recipe.extendedIngredients; track $index){
     <ion-item>
+      <ion-thumbnail slot="start">
+        <img [src]="'https://spoonacular.com/cdn/ingredients_100x100/' +ing.image"/>
+      </ion-thumbnail>
       <ion-label>
         {{ing.original}}
       </ion-label>
     </ion-item>
     }
   </ion-list>
+  <br> 
+  <h3> Instructions</h3>
+  <!--<div [innerHTML]="recipe.instructions" class="Instructions-text"></div> -->
+    <ion-list lines="'full"> 
+      @for (step of recipe.analyzedInstructions[0]?.steps; track step.number){
+      <ion-item>
+        <ion-label>
+            <h2>
+              Step {{step.number}}. 
+            </h2>
+            {{ step.step}}
+        </ion-label>
+      </ion-item>
+      }
+    </ion-list>
+
   <ion-button name="Favourites"> <!--Favourites Icon button-->
     <ion-icon name="heart" style="color: red;" size="large"></ion-icon>
     Add to Favouties
