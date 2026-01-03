@@ -16,7 +16,10 @@
         <img [src]="'https://spoonacular.com/cdn/ingredients_100x100/' +ing.image"/>
       </ion-thumbnail>
       <ion-label>
-        {{ing.original}}
+        {{ing.name}}
+      </ion-label>
+      <ion-label>
+        {{ing.amount}} {{ing.unit}}
       </ion-label>
     </ion-item>
     }
@@ -37,9 +40,11 @@
       }
     </ion-list>
 
-  <ion-button name="Favourites"> <!--Favourites Icon button-->
-    <ion-icon name="heart" style="color: red;" size="large"></ion-icon>
-    Add to Favouties
+  <ion-button name="Favourites" fill="outline" [color]="isFavourite ? 'danger' : 'primary'" (click)="toggleFavourite()" > <!--Favourites Icon button-->
+    <ion-icon name="heart" slot="start" style="color: red;" size="large"
+    [name]="isFavourite ? 'heart' : 'heart-outline'">
+    </ion-icon>
+    {{ isFavourite ? 'Remove from Favourites' : 'Add to Favourites'}}
   </ion-button>
   }
 </ion-content>

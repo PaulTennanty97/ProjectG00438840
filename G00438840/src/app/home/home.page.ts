@@ -51,5 +51,10 @@ export class HomePage {
       complete: () => { }
     });
   }
+  ionViewWillLeave(){
+    if (document.activeElement instanceof HTMLElement){
+      document.activeElement.blur();
+    }
+  }
 }
 

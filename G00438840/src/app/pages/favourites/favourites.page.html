@@ -1,7 +1,24 @@
 <app-header></app-header>
-
 <ion-content [fullscreen]="true">
   <p>
     Welcome to the Favourites page. 
   </p>
+  @if(favRecipes.length === 0){
+    <p> No favourites added yet!</p>
+  }
+  <ion-list>
+    @for (recipe of favRecipes; track recipe.id){
+      <ion-item>
+        <ion-thumbnail slot="start" [routerLink]="['/recipe-details', recipe.id]">
+          <img [src] = "recipe.image"/> 
+        </ion-thumbnail>
+        <ion-label [routerLink]="['/recipe-details', recipe.id]">
+            <h2>{{recipe.title}}</h2>
+          </ion-label>
+        <ion-button slot="end" color="danger"(click)="removeItem(recipe.id, $event)">
+          <ion-icon name="trash" slot="icon-only"></ion-icon>
+        </ion-button>
+      </ion-item>
+    }
+  </ion-list>
 </ion-content>
