@@ -4,4 +4,26 @@
   <p>
     Welcome to the HomePage
   </p>
+  <br>
+  <p>
+    Enter Ingredients: 
+  </p>
+  <ion-searchbar
+    placeholder="Enter an ingredient"
+    (ionInput)="handleInput($event)"
+    [debounce] ='1000'>
+  </ion-searchbar>
+  <ion-list>
+    @for (recipe of recipes; track recipe.id){
+      <ion-item>
+        <ion-thumbnail slot="start" sizd="large">
+          <img [src] ="recipe.image"/>
+        </ion-thumbnail>
+        <ion-label>
+          <h2>{{recipe.title}}</h2>
+        </ion-label>
+        <ion-button slot="end">Details</ion-button>
+      </ion-item>
+    } 
+  </ion-list>
 </ion-content>
