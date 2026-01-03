@@ -1,6 +1,28 @@
 <app-header></app-header>
-<ion-content [fullscreen]="true">
+<ion-content class="ion-padding" [fullscreen]="true">
   <p>
     Welcome to the Recipe Details page!
   </p>
+  @if (recipe){
+  <ion-card>
+    <img [src]="recipe.image" />
+  </ion-card>
+  <br>
+  <h1>{{recipe.title}}</h1>
+  <br>
+  <h3>Ingredients</h3>
+  <ion-list>
+    @for (ing of recipe.extendedIngredients; track ing.id){
+    <ion-item>
+      <ion-label>
+        {{ing.original}}
+      </ion-label>
+    </ion-item>
+    }
+  </ion-list>
+  <ion-button name="Favourites"> <!--Favourites Icon button-->
+    <ion-icon name="heart" style="color: red;" size="large"></ion-icon>
+    Add to Favouties
+  </ion-button>
+  }
 </ion-content>

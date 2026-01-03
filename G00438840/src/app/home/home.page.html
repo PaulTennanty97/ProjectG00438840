@@ -15,6 +15,7 @@
   </ion-searchbar>
   <ion-list>
     @for (recipe of recipes; track recipe.id){
+      <ion-card>
       <ion-item>
         <ion-thumbnail slot="start" sizd="large">
           <img [src] ="recipe.image"/>
@@ -22,8 +23,9 @@
         <ion-label>
           <h2>{{recipe.title}}</h2>
         </ion-label>
-        <ion-button slot="end">Details</ion-button>
+        <ion-button slot="end" (click)="viewDetails(recipe.id)">View Details</ion-button>
       </ion-item>
+      </ion-card>
     } 
   </ion-list>
 </ion-content>

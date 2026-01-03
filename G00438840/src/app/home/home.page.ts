@@ -18,7 +18,11 @@ export class HomePage {
   recipes: any[] = [];
   private apiKey = "70759a4f7911402abcc53d3c51d3b759";
 
-  constructor(private mhs: Http) { }
+  constructor(private mhs: Http, private router: Router) { }
+
+  viewDetails(id: number){
+    this.router.navigate(['/recipe-details', id]);
+  }
 
   ngOnInit() { // getting the JSON data from the url. 
     this.getRecipes('');
@@ -26,7 +30,11 @@ export class HomePage {
 
   handleInput(event: any) {
     const query = event?.target.value.toLowerCase();
-    if (query && query.trim().length >= 3) {
+    if(!query || query.trim() === ''){ // will clear the displayed results when the search bar empties
+      this.recipes = []; 
+      return;
+    }
+    if (query && query.trim().length >= 3) { // will not search until at least 3 characters are typed. 
       this.getRecipes(query);
     }
   }

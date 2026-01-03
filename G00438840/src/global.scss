@@ -35,3 +35,19 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
+
+ion-content{
+    --background:#FAF7F3;
+}
+ion-toolbar{
+    --background: #D9A299; 
+}
+ion-card, ion-item{
+    --background: #F0E4D3; 
+    display: flex; 
+    flex-direction: column;
+    border: 2px solid var(ion-color-primary); 
+    border-radius: 12px;
+    overflow: hidden;
+    object-fit: cover;
+}
