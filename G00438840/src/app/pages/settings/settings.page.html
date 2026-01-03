@@ -4,4 +4,35 @@
   <p>
     Welcome to the Settings page. 
   <p>
+  <ion-list-header>
+    <ion-label> Measurement Preferences</ion-label>
+  </ion-list-header>
+
+  <ion-list>
+    <ion-radio-group [(ngModel)]="selectedUnit" (ionChange)="onUnitChange()">
+      <ion-item>
+        <ion-label>
+          <h2>
+            Metric System
+          </h2>
+          <p>
+            Grams, Kilograms, Millilitres
+          </p>
+        </ion-label>
+        <ion-radio slot="end" value="metric"></ion-radio>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>
+          <h2>
+            US System
+          </h2>
+          <p>
+            Ounces, Pounds, Cups
+          </p>
+        </ion-label>
+        <ion-radio slot="end" value="us"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
 </ion-content>
