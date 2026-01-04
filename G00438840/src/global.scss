@@ -36,6 +36,8 @@
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
 
+//For consistency across the pages, I included globall css elements to ensure ion content appeared the same across the pages. 
+
 ion-content{
     --background:#FAF7F3;
 }

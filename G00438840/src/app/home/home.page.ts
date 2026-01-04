@@ -20,24 +20,25 @@ export class HomePage {
 
   constructor(private mhs: Http, private router: Router) { }
 
-  viewDetails(id: number){
+  viewDetails(id: number){ // navigates to recipe details page using the iD of the recipe selected. 
     this.router.navigate(['/recipe-details', id]);
   }
 
   ngOnInit() { // getting the JSON data from the url. 
     this.getRecipes('');
   }
-
+// listens to the search bar 
   handleInput(event: any) {
     const query = event?.target.value.toLowerCase();
     if(!query || query.trim() === ''){ // will clear the displayed results when the search bar empties
       this.recipes = []; 
-      return;
+      return; // returns an empty array of recipe results. 
     }
     if (query && query.trim().length >= 3) { // will not search until at least 3 characters are typed. 
       this.getRecipes(query);
     }
   }
+  // this method retrieves the recipes from the url
   getRecipes(query: string) {
     const url = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${this.apiKey}&query=${query}&number=25`;
     this.mhs.get(url).subscribe({
@@ -46,11 +47,12 @@ export class HomePage {
         console.log('Data received:', this.recipes);
       },
       error: (e: any) => {
-        console.error(e);
+        console.error(e); // catches any errors. 
       },
       complete: () => { }
     });
   }
+  // closese the search bar when leaving the page. 
   ionViewWillLeave(){
     if (document.activeElement instanceof HTMLElement){
       document.activeElement.blur();

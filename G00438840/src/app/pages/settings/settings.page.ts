@@ -17,10 +17,16 @@ export class SettingsPage implements OnInit {
 
   constructor(private settingsService: SettingsService) { }
 
+// this ngOnInit starts the settings page, retrieves the saved unit of measurement preference from ionic storage
   async ngOnInit() {
-    const savedUnit = await this.settingsService.getUnitPref();
-    this.selectedUnit = savedUnit || 'metric'; 
+    const savedUnit :'metric'| 'us'|null = await this.settingsService.getUnitPref();
+    if(savedUnit){
+      this.selectedUnit = savedUnit;
+    }else{
+      this.selectedUnit = 'metric'; // the default setting will be metric 
+    }
   }
+// when the user selects the other radio button when selecting of unit of measurement, the latest preference is updated and saved. 
   async onUnitChange(){
     await this.settingsService.setUnitPref(this.selectedUnit);
     console.log('Unit preference saved:', this.selectedUnit);

@@ -2,7 +2,7 @@
 
 <ion-content [fullscreen]="true">
   <p>
-    Welcome to the HomePage
+   HomePage
   </p>
   <br>
   <p>
@@ -11,19 +11,20 @@
   <ion-searchbar
     placeholder="Enter an ingredient"
     (ionInput)="handleInput($event)"
-    [debounce] ='1000'>
+    [debounce] ='500'> <!-- The search will commence .5 seconds after the user finishes typing-->
   </ion-searchbar>
   <ion-list>
+    <!-- for every recipe, the below will be displayed.-->
     @for (recipe of recipes; track recipe.id){
       <ion-card>
       <ion-item>
         <ion-thumbnail slot="start" sizd="large">
-          <img [src] ="recipe.image"/>
+          <img [src] ="recipe.image"/><!-- the recipe image is inserted here-->
         </ion-thumbnail>
         <ion-label>
-          <h2>{{recipe.title}}</h2>
+          <h2>{{recipe.title}}</h2> <!-- the recipe title is inserted here-->
         </ion-label>
-        <ion-button slot="end" (click)="viewDetails(recipe.id)">View Details</ion-button>
+        <ion-button slot="end" (click)="viewDetails(recipe.id)">View Details</ion-button> <!-- the View Details button-->
       </ion-item>
       </ion-card>
     } 

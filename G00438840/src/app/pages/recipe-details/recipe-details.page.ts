@@ -9,6 +9,7 @@ import { Http } from 'src/app/services/http';
 import { FavouritesService } from 'src/app/services/favouritesService';
 import { heart, heartOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
+import { SettingsService } from 'src/app/services/settingsService';
 
 @Component({
   selector: 'app-recipe-details',
@@ -23,15 +24,30 @@ export class RecipeDetailsPage implements OnInit {
   private apiKey = "70759a4f7911402abcc53d3c51d3b759";
   extendedIngredients: any;
   isFavourite: boolean = false;
+  currentUnit: 'metric'|'us' ='metric';
 
-  constructor(private route: ActivatedRoute, private mhs: Http, private favService: FavouritesService) {
+  constructor(private route: ActivatedRoute, private mhs: Http, private favService: FavouritesService, private setttingsService: SettingsService) {
     addIcons({ heart, 'heart-outline': heartOutline });
+  }
+  // this extracts the recipe ID from the data returned from the URL. 
+   ngOnInit() {
+    const id = this.route.snapshot.paramMap.get('id');
+    console.log('Recipe ID from URL:', id);
+    if (id) {
+      this.fetchRecipeInfo(id);
+    }
+    // when a user changes the unit of measurements then the change is applied here. 
+    this.setttingsService.unit$.subscribe(unit =>{
+      this.currentUnit= unit; 
+      console.log('Unit of Measurement updated to:', unit);
+    });
   }
   ionViewWillEnter() {
     if (this.recipe) {
       this.isFavourite = this.favService.isFavourite(this.recipe.id);
     }
   }
+  // a method which manages the favourite status of the recipe. 
   async toggleFavourite() {
     if (this.isFavourite) {
       await this.favService.removeFavourite(this.recipe.id);
@@ -42,43 +58,41 @@ export class RecipeDetailsPage implements OnInit {
     }
     this.isFavourite = !this.isFavourite;
   }
-
-  ngOnInit() {
-    const id = this.route.snapshot.paramMap.get('id');
-    console.log('Recipe ID from URL:', id);
-    if (id) {
-      this.fetchRecipeInfo(id);
-    }
-  }
+// a method which gathers the full recipe details and instructions from the url
   fetchRecipeInfo(id: string) {
     const url = `https://api.spoonacular.com/recipes/${id}/information?apiKey=${this.apiKey}&includeNutrition=false`;
 
     this.mhs.get(url).subscribe((data: any) => {
 
       console.log(`Recipe ${data.id} received.`);
+      // here only the required data is being collected. 
       this.recipe = {
         id: data.id,
         title: data.title,
         image: data.image,
-        extendedIngredients: data.extendedIngredients.map((data: any) => ({
-          image: data.image,
-          name: data.name, 
-          amount: data.measures?.metric?.amount || data.amount,
-          unit: data.measures?.metric?.unitShort || data.unitShort
-        })),
+        extendedIngredients: data.extendedIngredients,
+        name: data.name, 
+          //amount: data.measures?.metric?.amount || data.amount,
+         // unit: data.measures?.metric?.unitShort || data.unitShort,
+         // measures: ing.measures
         instructions: data.instructions,
         analyzedInstructions: data.analyzedInstructions,
       };
       this.isFavourite = this.favService.isFavourite(this.recipe.id);
     });
   }
+// a function which formats the ingredient measurements depending on the user preference. 
+  getDisplayAmount(ing: any){
+    if(!ing || !ing.measures) {
+      return ing?.amount + '' + ing?.unit || ''; 
+    }
+    const measure = this.currentUnit ==='metric' ? ing.measures.metric : ing.measures.us;
+    return `${measure.amount} ${measure.unitShort}`
+  }
+// When leabving the page, this method clodes an ionic elements so they don't remain active. 
   ionViewWillLeave() {
     if (document.activeElement instanceof HTMLElement) {
       document.activeElement.blur();
     }
   }
-  /* addToFavourites(){
-     this.favService.addFavourite(this.recipe); 
-   }
-   */
 }

@@ -1,21 +1,23 @@
 <app-header></app-header>
 <ion-content [fullscreen]="true">
   <p>
-    Welcome to the Favourites page. 
+    Favourites
   </p>
+  <!--If no favourites are selected, the below method appears-->
   @if(favRecipes.length === 0){
     <p> No favourites added yet!</p>
   }
   <ion-list>
+    <!-- where recipes are favourited, they will appear on the favourites page-->
     @for (recipe of favRecipes; track recipe.id){
       <ion-item>
-        <ion-thumbnail slot="start" [routerLink]="['/recipe-details', recipe.id]">
+        <ion-thumbnail slot="start" [routerLink]="['/recipe-details', recipe.id]"> <!-- the image when selecte will return users to the recipe-->
           <img [src] = "recipe.image"/> 
         </ion-thumbnail>
-        <ion-label [routerLink]="['/recipe-details', recipe.id]">
+        <ion-label [routerLink]="['/recipe-details', recipe.id]"><!-- the recipe title when selected will return users to the recipe-->
             <h2>{{recipe.title}}</h2>
           </ion-label>
-        <ion-button slot="end" color="danger"(click)="removeItem(recipe.id, $event)">
+        <ion-button slot="end" color="danger"(click)="removeItem(recipe.id, $event)"> <!-- a button to remove a recipe as a favourite-->
           <ion-icon name="trash" slot="icon-only"></ion-icon>
         </ion-button>
       </ion-item>
